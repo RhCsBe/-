@@ -10,12 +10,14 @@ CONFIG += c++17
 
 SOURCES += \
     chess.cpp \
+    judgment.cpp \
     main.cpp \
     chessboard.cpp
 
 HEADERS += \
     chess.h \
-    chessboard.h
+    chessboard.h \
+    judgment.h
 
 FORMS += \
     chessboard.ui

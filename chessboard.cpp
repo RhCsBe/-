@@ -122,11 +122,24 @@ void ChessBoard::mousePressEvent(QMouseEvent *event)
     cmpPos(x,y);
     if(select==-1)
     {
-        select=pos[x+y*9];
+        select=pos[y][x];
     }
     else
     {
-        moveTo(select,x,y);
+        if(select>15&&pos[y][x]>15||select<16&&pos[y][x]<16&&pos[y][x]!=-1)
+        {
+            if(select==pos[y][x])
+                select=-1;
+            else
+                select=pos[y][x];
+        }
+        else
+        {
+            if(judge(select,x,y))
+                moveTo(select,x,y);
+            else
+                return;
+        }
     }
     update();
 }
@@ -233,36 +246,45 @@ void ChessBoard::setChess()
 
 void ChessBoard::setPos()
 {
+    pos=new int*[10];
+    for(int i=0;i<10;i++)
+    {
+        pos[i]=new int[9];
+    }
     for(int i=0;i<9;i++)
     {
-        pos[i]=i;
+        pos[0][i]=i;
     }
-    for(int i=9;i<81;i++)
+    for(int i=1;i<9;i++)
     {
-        pos[i]=-1;
+        for(int j=0;j<9;j++)
+        {
+            pos[i][j]=-1;
+        }
     }
-    pos[19]=9;
-    pos[25]=10;
-    for(int i=27;i<36;i+=2)
+    pos[2][1]=9;
+    pos[2][7]=10;
+    for(int i=0;i<9;i+=2)
     {
-        pos[i]=11+(i-27)/2;
+        pos[3][i]=11+i/2;
     }
-    for(int i=54;i<63;i+=2)
+    for(int i=0;i<9;i+=2)
     {
-        pos[i]=16+(i-54)/2;
+        pos[6][i]=16+i/2;
     }
-    pos[64]=21;
-    pos[70]=22;
-    for(int i=81;i<90;i++)
+    pos[7][1]=21;
+    pos[7][7]=22;
+    for(int i=0;i<9;i++)
     {
-        pos[i]=23+i-81;
+        pos[9][i]=23+i;
     }
-    for(int i=0;i<90;i++)
+    for(int i=0;i<10;i++)
     {
-        if(i%9==0&&i!=0)
-            qDebug();
-        qDebug()<<pos[i];
-
+        qDebug();
+        for(int j=0;j<9;j++)
+        {
+            qDebug()<<pos[i][j];
+        }
     }
 }
 
@@ -277,14 +299,44 @@ void ChessBoard::moveTo(int num, int posX, int posY)
 {
     int x=chess[num].line;
     int y=chess[num].row;
-    pos[x+y*9]=-1;
-    if(pos[posX+posY*9]!=-1&&pos[posX+posY*9]!=select)
+    pos[y][x]=-1;
+    if(pos[posY][posX]!=-1&&pos[posY][posX]!=select)
     {
-        chess[pos[posX+posY*9]].dead=true;
+        chess[pos[posY][posX]].dead=true;
     }
-    pos[posX+posY*9]=select;
+    pos[posY][posX]=select;
     chess[num].moveTo(posX,posY);
     select=-1;
 
+}
+
+bool ChessBoard::judge(int moveId, int x, int y)
+{
+    switch(chess[moveId].identity)
+    {
+    case status::jv:
+        return judgment.judge_jv(chess[moveId],x,y,pos);
+        break;
+    case status::ma:
+        return judgment.judge_ma(chess[moveId],x,y,pos);
+        break;
+    case status::xiang:
+        return judgment.judge_xiang(chess[moveId],x,y,pos);
+        break;
+    case status::shi:
+        return judgment.judge_shi(chess[moveId],x,y,pos);
+        break;
+    case status::jiang:
+        return judgment.judge_jiang(chess[moveId],x,y,pos);
+        break;
+    case status::bing:
+        return judgment.judge_bing(chess[moveId],x,y,pos);
+        break;
+    case status::pao:
+        return judgment.judge_pao(chess[moveId],x,y,pos);
+        break;
+    default:
+        break;
+    }
 }
 

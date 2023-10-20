@@ -6,6 +6,8 @@
 #include "chess.h"
 #include <QDebug>
 #include <QMouseEvent>
+#include "judgment.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ChessBoard; }
@@ -23,8 +25,9 @@ public:
     };
     int radius=25;
     Chess chess[32];
-    int pos[90];
+    int** pos=nullptr;
     int select=-1;
+    Judgment judgment;
     void paintEvent(QPaintEvent *event);//绘图事件
     void paintBoard(QPainter& painter);//绘制棋盘
     void paintChess(QPainter& painter);//绘制棋子
@@ -33,6 +36,7 @@ public:
     void setPos();//设置底层的棋盘数据
     void cmpPos(int &posX,int &posY);//计算鼠标点击点对应棋盘坐标
     void moveTo(int num,int posX,int posY);//移动棋子并修改底层数据
+    bool judge(int moveId,int x,int y);//判断能否走棋
 private:
     Ui::ChessBoard *ui;
 };
