@@ -8,6 +8,7 @@ ChessBoard::ChessBoard(QWidget *parent)
     ui->setupUi(this);
     setChess();
     setPos();
+    setAudio();
 }
 
 ChessBoard::~ChessBoard()
@@ -122,7 +123,12 @@ void ChessBoard::mousePressEvent(QMouseEvent *event)
     cmpPos(x,y);
     if(select==-1)
     {
+        if(user&&pos[y][x]<16||!user&&pos[y][x]>15)
+        {
+            return;
+        }
         select=pos[y][x];
+        selectChess->play();
     }
     else
     {
@@ -131,17 +137,60 @@ void ChessBoard::mousePressEvent(QMouseEvent *event)
             if(select==pos[y][x])
                 select=-1;
             else
+            {
                 select=pos[y][x];
+                selectChess->play();
+            }
         }
         else
         {
             if(judge(select,x,y))
+            {
+                moveChess->play();
                 moveTo(select,x,y);
+                if(judgment.judge_jiangjun(chess,user,pos))
+                {
+                    jiangJun->play();
+                }
+                user=!user;
+            }
             else
                 return;
         }
     }
     update();
+}
+
+void ChessBoard::setAudio()
+{
+    //分配多媒体指针
+    moveChess=new QMediaPlayer(this);
+    selectChess=new QMediaPlayer(this);
+    killChess=new QMediaPlayer(this);
+    jiangJun=new QMediaPlayer(this);
+    gameWin=new QMediaPlayer(this);
+    gameLose=new QMediaPlayer(this);
+    //分配音频输出指针
+    audio_moveChess=new QAudioOutput(this);
+    audio_selectChess=new QAudioOutput(this);
+    audio_killChess=new QAudioOutput(this);
+    audio_jiangJun=new QAudioOutput(this);
+    audio_gameWin=new QAudioOutput(this);
+    audio_gameLose=new QAudioOutput(this);
+    //连接多媒体和音频输出
+    moveChess->setAudioOutput(audio_moveChess);
+    selectChess->setAudioOutput(audio_selectChess);
+    killChess->setAudioOutput(audio_killChess);
+    jiangJun->setAudioOutput(audio_jiangJun);
+    gameWin->setAudioOutput(audio_gameWin);
+    gameLose->setAudioOutput(audio_gameLose);
+    //设置多媒体资源
+    moveChess->setSource(QUrl("qrc:/audio/audio/go.mp3"));
+    selectChess->setSource(QUrl("qrc:/audio/audio/select.mp3"));
+    killChess->setSource(QUrl("qrc:/audio/audio/eat.mp3"));
+    jiangJun->setSource(QUrl("qrc:/audio/audio/Man_jiangjun.mp3"));
+    gameWin->setSource(QUrl("qrc:audio/audio/gamewin.mp3"));
+    gameLose->setSource(QUrl("qrc:/audio/audio/gamelose.mp3"));
 }
 
 void ChessBoard::setChess()
@@ -303,6 +352,7 @@ void ChessBoard::moveTo(int num, int posX, int posY)
     if(pos[posY][posX]!=-1&&pos[posY][posX]!=select)
     {
         chess[pos[posY][posX]].dead=true;
+        killChess->play();
     }
     pos[posY][posX]=select;
     chess[num].moveTo(posX,posY);

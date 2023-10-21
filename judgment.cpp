@@ -5,7 +5,7 @@ Judgment::Judgment()
 
 }
 
-bool Judgment::judge_bing(Chess& chess,int x,int y,int** pos)
+bool Judgment::judge_bing(const Chess& chess,int x,int y,int** pos)
 {
     if(chess.color)
     {
@@ -51,7 +51,7 @@ bool Judgment::judge_bing(Chess& chess,int x,int y,int** pos)
     }
 }
 
-bool Judgment::judge_pao(Chess &chess, int x, int y, int **pos)
+bool Judgment::judge_pao(const Chess &chess, int x, int y, int **pos)
 {
     if(std::abs(x-chess.line)==0||std::abs(y-chess.row)==0)
     {
@@ -117,7 +117,7 @@ bool Judgment::judge_pao(Chess &chess, int x, int y, int **pos)
         return false;
 }
 
-bool Judgment::judge_jiang(Chess &chess, int x, int y, int **pos)
+bool Judgment::judge_jiang(const Chess &chess, int x, int y, int **pos)
 {
     if(chess.color)
     {
@@ -149,7 +149,7 @@ bool Judgment::judge_jiang(Chess &chess, int x, int y, int **pos)
     }
 }
 
-bool Judgment::judge_shi(Chess &chess, int x, int y, int **pos)
+bool Judgment::judge_shi(const Chess &chess, int x, int y, int **pos)
 {
     if(chess.color)
     {
@@ -181,7 +181,7 @@ bool Judgment::judge_shi(Chess &chess, int x, int y, int **pos)
     }
 }
 
-bool Judgment::judge_xiang(Chess &chess, int x, int y, int **pos)
+bool Judgment::judge_xiang(const Chess &chess, int x, int y, int **pos)
 {
     if(chess.color)
     {
@@ -217,7 +217,7 @@ bool Judgment::judge_xiang(Chess &chess, int x, int y, int **pos)
     }
 }
 
-bool Judgment::judge_ma(Chess &chess, int x, int y, int **pos)
+bool Judgment::judge_ma(const Chess &chess, int x, int y, int **pos)
 {
     int dx=x-chess.line;
     int dy=y-chess.row;
@@ -242,7 +242,7 @@ bool Judgment::judge_ma(Chess &chess, int x, int y, int **pos)
         return false;
 }
 
-bool Judgment::judge_jv(Chess &chess, int x, int y, int **pos)
+bool Judgment::judge_jv(const Chess &chess, int x, int y, int **pos)
 {
     if(x-chess.line==0||y-chess.row==0)
     {
@@ -274,4 +274,68 @@ bool Judgment::judge_jv(Chess &chess, int x, int y, int **pos)
     }
     else
         return false;
+}
+
+bool Judgment::judge_kill(const Chess &chess1, const Chess &chess2)
+{
+    if(chess1.dead||chess2.dead)
+        return true;
+    else
+        return false;
+}
+
+bool Judgment::judge_jiangjun(const Chess *chess, bool user, int **pos)
+{
+    int minimum,maximum,target;
+    if(user)
+    {
+        minimum=16;
+        maximum=32;
+        target=4;
+    }
+    else
+    {
+        minimum=0;
+        maximum=16;
+        target=27;
+    }
+    for(int i=minimum;i<maximum;i++)
+    {
+        if(chess[i].dead)
+            continue;
+        switch(chess[i].identity)
+        {
+        case 0:
+            if(judge_jiang(chess[i],chess[target].line,chess[target].row,pos))
+                return true;
+            break;
+        case 1:
+            if(judge_shi(chess[i],chess[target].line,chess[target].row,pos))
+                return true;
+            break;
+        case 2:
+            if(judge_xiang(chess[i],chess[target].line,chess[target].row,pos))
+                return true;
+            break;
+        case 3:
+            if(judge_ma(chess[i],chess[target].line,chess[target].row,pos))
+                return true;
+            break;
+        case 4:
+            if(judge_jv(chess[i],chess[target].line,chess[target].row,pos))
+                return true;
+            break;
+        case 5:
+            if(judge_pao(chess[i],chess[target].line,chess[target].row,pos))
+                return true;
+            break;
+        case 6:
+            if(judge_bing(chess[i],chess[target].line,chess[target].row,pos))
+                return true;
+            break;
+        default:
+            break;
+        }
+    }
+    return false;
 }

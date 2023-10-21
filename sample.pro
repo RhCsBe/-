@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,12 +12,16 @@ SOURCES += \
     chess.cpp \
     judgment.cpp \
     main.cpp \
-    chessboard.cpp
+    chessboard.cpp \
+    singleplay.cpp \
+    step.cpp
 
 HEADERS += \
     chess.h \
     chessboard.h \
-    judgment.h
+    judgment.h \
+    singleplay.h \
+    step.h
 
 FORMS += \
     chessboard.ui
@@ -26,3 +30,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    src.qrc

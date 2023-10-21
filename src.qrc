@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/audio">
+        <file>audio/background.mp3</file>
+        <file>audio/eat.mp3</file>
+        <file>audio/gamelose.mp3</file>
+        <file>audio/gamewin.mp3</file>
+        <file>audio/go.mp3</file>
+        <file>audio/Man_jiangjun.mp3</file>
+        <file>audio/select.mp3</file>
+    </qresource>
+</RCC>
