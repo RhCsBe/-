@@ -9,6 +9,10 @@ ChessBoard::ChessBoard(QWidget *parent)
     setChess();
     setPos();
     setAudio();
+    ending=new Ending(this);
+    //这段代码有点问题，记得解决
+    //connect(ending->getUi()->nextOne,QPushButton::clicked,this,[this](){this->setChess();this->setPos();user=0;select=-1;ending->close();delete ending;});
+    //connect(ending->getUi()->over,QPushButton::clicked,this,[this](){ending->close();this->close();});
 }
 
 ChessBoard::~ChessBoard()
@@ -63,6 +67,10 @@ void ChessBoard::paintChess(QPainter &painter)
     painter.setFont(QFont("Arial",radius,500));
     for(int i=0;i<32;i++)
     {
+        if(i==16)
+        {
+            painter.setPen(QPen(Qt::red,1.25));
+        }
         if(chess[i].dead)
             continue;
         painter.setBrush(Qt::yellow);
@@ -152,6 +160,8 @@ void ChessBoard::mousePressEvent(QMouseEvent *event)
                 {
                     jiangJun->play();
                 }
+                if(judgment.judge_kill(chess[4],chess[27]))
+                    setEnding();
                 user=!user;
             }
             else
@@ -291,6 +301,11 @@ void ChessBoard::setChess()
     chess[27].color=1;
     chess[27].num=27;
     chess[27].identity=status::jiang;
+
+    for(int i=0;i<32;i++)
+    {
+        chess[i].dead=false;
+    }
 }
 
 void ChessBoard::setPos()
@@ -327,14 +342,14 @@ void ChessBoard::setPos()
     {
         pos[9][i]=23+i;
     }
-    for(int i=0;i<10;i++)
-    {
-        qDebug();
-        for(int j=0;j<9;j++)
-        {
-            qDebug()<<pos[i][j];
-        }
-    }
+//    for(int i=0;i<10;i++)
+//    {
+//        qDebug();
+//        for(int j=0;j<9;j++)
+//        {
+//            qDebug()<<pos[i][j];
+//        }
+//    }
 }
 
 void ChessBoard::cmpPos(int &posX, int &posY)
@@ -354,10 +369,9 @@ void ChessBoard::moveTo(int num, int posX, int posY)
         chess[pos[posY][posX]].dead=true;
         killChess->play();
     }
-    pos[posY][posX]=select;
+    pos[posY][posX]=num;
     chess[num].moveTo(posX,posY);
     select=-1;
-
 }
 
 bool ChessBoard::judge(int moveId, int x, int y)
@@ -388,5 +402,18 @@ bool ChessBoard::judge(int moveId, int x, int y)
     default:
         break;
     }
+}
+
+void ChessBoard::setEnding()
+{
+    if(chess[4].dead)
+    {
+        ending->getUi()->result->setText("红方胜");
+    }
+    else
+    {
+        ending->getUi()->result->setText("黑方胜");
+    }
+    ending->exec();
 }
 

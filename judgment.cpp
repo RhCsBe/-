@@ -7,8 +7,16 @@ Judgment::Judgment()
 
 bool Judgment::judge_bing(const Chess& chess,int x,int y,int** pos)
 {
+    //不能自己吃自己
+    if(chess.line==x&&chess.row==y)
+        return false;
+    //不能吃相同阵营的棋子
+    if(chess.num>15&&pos[y][x]>15||chess.num<16&&pos[y][x]<16&&pos[y][x]!=-1)
+        return false;
     if(chess.color)
     {
+        if(chess.line==x&&chess.row==y)
+            return false;
         if(pos[y][x]>15)
         {
             return false;
@@ -53,6 +61,12 @@ bool Judgment::judge_bing(const Chess& chess,int x,int y,int** pos)
 
 bool Judgment::judge_pao(const Chess &chess, int x, int y, int **pos)
 {
+    //不能自己吃自己
+    if(chess.line==x&&chess.row==y)
+        return false;
+    //不能吃相同阵营的棋子
+    if(chess.num>15&&pos[y][x]>15||chess.num<16&&pos[y][x]<16&&pos[y][x]!=-1)
+        return false;
     if(std::abs(x-chess.line)==0||std::abs(y-chess.row)==0)
     {
         int minimum,maximum;
@@ -119,6 +133,12 @@ bool Judgment::judge_pao(const Chess &chess, int x, int y, int **pos)
 
 bool Judgment::judge_jiang(const Chess &chess, int x, int y, int **pos)
 {
+    //不能自己吃自己
+    if(chess.line==x&&chess.row==y)
+        return false;
+    //不能吃相同阵营的棋子
+    if(chess.num>15&&pos[y][x]>15||chess.num<16&&pos[y][x]<16&&pos[y][x]!=-1)
+        return false;
     if(chess.color)
     {
         if(x<3||x>5||y<7)
@@ -151,6 +171,12 @@ bool Judgment::judge_jiang(const Chess &chess, int x, int y, int **pos)
 
 bool Judgment::judge_shi(const Chess &chess, int x, int y, int **pos)
 {
+    //不能自己吃自己
+    if(chess.line==x&&chess.row==y)
+        return false;
+    //不能吃相同阵营的棋子
+    if(chess.num>15&&pos[y][x]>15||chess.num<16&&pos[y][x]<16&&pos[y][x]!=-1)
+        return false;
     if(chess.color)
     {
         if(x<3||x>5||y<7)
@@ -183,6 +209,12 @@ bool Judgment::judge_shi(const Chess &chess, int x, int y, int **pos)
 
 bool Judgment::judge_xiang(const Chess &chess, int x, int y, int **pos)
 {
+    //不能自己吃自己
+    if(chess.line==x&&chess.row==y)
+        return false;
+    //不能吃相同阵营的棋子
+    if(chess.num>15&&pos[y][x]>15||chess.num<16&&pos[y][x]<16&&pos[y][x]!=-1)
+        return false;
     if(chess.color)
     {
         if(y<5)
@@ -219,6 +251,12 @@ bool Judgment::judge_xiang(const Chess &chess, int x, int y, int **pos)
 
 bool Judgment::judge_ma(const Chess &chess, int x, int y, int **pos)
 {
+    //不能自己吃自己
+    if(chess.line==x&&chess.row==y)
+        return false;
+    //不能吃相同阵营的棋子
+    if(chess.num>15&&pos[y][x]>15||chess.num<16&&pos[y][x]<16&&pos[y][x]!=-1)
+        return false;
     int dx=x-chess.line;
     int dy=y-chess.row;
     if(std::abs(dx)==1&&std::abs(dy)==2||std::abs(dx)==2&&std::abs(dy)==1)
@@ -244,6 +282,12 @@ bool Judgment::judge_ma(const Chess &chess, int x, int y, int **pos)
 
 bool Judgment::judge_jv(const Chess &chess, int x, int y, int **pos)
 {
+    //不能自己吃自己
+    if(chess.line==x&&chess.row==y)
+        return false;
+    //不能吃相同阵营的棋子
+    if(chess.num>15&&pos[y][x]>15||chess.num<16&&pos[y][x]<16&&pos[y][x]!=-1)
+        return false;
     if(x-chess.line==0||y-chess.row==0)
     {
         int minimum,maximum;

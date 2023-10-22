@@ -9,6 +9,8 @@
 #include "judgment.h"
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include "ending.h"
+#include "ui_ending.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ChessBoard; }
@@ -42,6 +44,7 @@ public:
     QAudioOutput* audio_jiangJun=nullptr;
     QAudioOutput* audio_gameWin=nullptr;
     QAudioOutput* audio_gameLose=nullptr;
+    Ending* ending;
     void paintEvent(QPaintEvent *event);//绘图事件
     void paintBoard(QPainter& painter);//绘制棋盘
     void paintChess(QPainter& painter);//绘制棋子
@@ -52,6 +55,7 @@ public:
     void cmpPos(int &posX,int &posY);//计算鼠标点击点对应棋盘坐标
     void moveTo(int num,int posX,int posY);//移动棋子并修改底层数据
     bool judge(int moveId,int x,int y);//判断能否走棋
+    void setEnding();
 private:
     Ui::ChessBoard *ui;
 };

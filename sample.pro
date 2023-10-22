@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     chess.cpp \
+    ending.cpp \
     judgment.cpp \
     main.cpp \
     chessboard.cpp \
@@ -19,12 +20,14 @@ SOURCES += \
 HEADERS += \
     chess.h \
     chessboard.h \
+    ending.h \
     judgment.h \
     singleplay.h \
     step.h
 
 FORMS += \
-    chessboard.ui
+    chessboard.ui \
+    ending.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
