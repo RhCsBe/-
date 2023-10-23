@@ -8,4 +8,8 @@
         <file>audio/Man_jiangjun.mp3</file>
         <file>audio/select.mp3</file>
     </qresource>
+    <qresource prefix="/img">
+        <file>img/gamelose.jpg</file>
+        <file>img/gamewin.jpg</file>
+    </qresource>
 </RCC>

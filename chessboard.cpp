@@ -9,10 +9,12 @@ ChessBoard::ChessBoard(QWidget *parent)
     setChess();
     setPos();
     setAudio();
+    setFunctionStyle();
     ending=new Ending(this);
     //这段代码有点问题，记得解决
-    //connect(ending->getUi()->nextOne,QPushButton::clicked,this,[this](){this->setChess();this->setPos();user=0;select=-1;ending->close();delete ending;});
-    //connect(ending->getUi()->over,QPushButton::clicked,this,[this](){ending->close();this->close();});
+    //点击再来一局按键后将user设置为0是因为槽函数响应完后主进程回到setEnding函数后继续执行，下一行代码user=!user会将0设置为1
+    connect(ending->getUi()->nextOne,QPushButton::clicked,this,[this](){this->setChess();this->setPos();user=0;select=-1;ending->close();});
+    connect(ending->getUi()->over,QPushButton::clicked,this,[this](){ending->close();this->close();});
 }
 
 ChessBoard::~ChessBoard()
@@ -154,6 +156,8 @@ void ChessBoard::mousePressEvent(QMouseEvent *event)
         {
             if(judge(select,x,y))
             {
+                //要先存储玩家的走法，否则走棋后再存储的数据是错误的，或者可以先生成Step，直接存储Step，就无所谓先走后走
+                vector.push_back(new Step(select,x-chess[select].line,y-chess[select].row,pos[y][x]));
                 moveChess->play();
                 moveTo(select,x,y);
                 if(judgment.judge_jiangjun(chess,user,pos))
@@ -168,6 +172,7 @@ void ChessBoard::mousePressEvent(QMouseEvent *event)
                 return;
         }
     }
+    //qDebug()<<user;
     update();
 }
 
@@ -200,7 +205,7 @@ void ChessBoard::setAudio()
     killChess->setSource(QUrl("qrc:/audio/audio/eat.mp3"));
     jiangJun->setSource(QUrl("qrc:/audio/audio/Man_jiangjun.mp3"));
     gameWin->setSource(QUrl("qrc:audio/audio/gamewin.mp3"));
-    gameLose->setSource(QUrl("qrc:/audio/audio/gamelose.mp3"));
+    gameLose->setSource(QUrl("qrc:/audio/audio/gamelose.mp3"));    
 }
 
 void ChessBoard::setChess()
@@ -349,7 +354,15 @@ void ChessBoard::setPos()
 //        {
 //            qDebug()<<pos[i][j];
 //        }
-//    }
+    //    }
+}
+
+void ChessBoard::setFunctionStyle()
+{
+    ui->pattern->setStyleSheet("color:red;");
+    ui->pattern->setText("双人对战");
+    //ui->regret->setEnabled(false);
+    connect(ui->regret,QPushButton::clicked,this,ChessBoard::regretChess);
 }
 
 void ChessBoard::cmpPos(int &posX, int &posY)
@@ -404,16 +417,62 @@ bool ChessBoard::judge(int moveId, int x, int y)
     }
 }
 
+void ChessBoard::advance(Step *step)
+{
+    int x=chess[step->moveId].line;
+    int y=chess[step->moveId].row;
+    pos[y][x]=-1;
+    if(pos[y+step->dy][x+step->dx]!=-1)
+    {
+        chess[pos[y+step->dy][x+step->dx]].dead=true;
+    }
+    pos[y+step->dy][x+step->dx]=step->moveId;
+    chess[step->moveId].moveTo(x+step->dx,y+step->dy);
+}
+
+void ChessBoard::retreat(Step *step)
+{
+    int x=chess[step->moveId].line;
+    int y=chess[step->moveId].row;
+    if(step->killId!=-1)
+    {
+        chess[step->killId].dead=false;
+    }
+    pos[y][x]=step->killId;
+    pos[y-step->dy][x-step->dx]=step->moveId;
+    chess[step->moveId].moveTo(x-step->dx,y-step->dy);
+}
+
 void ChessBoard::setEnding()
 {
     if(chess[4].dead)
     {
-        ending->getUi()->result->setText("红方胜");
+        QPixmap pixmap(":/img/img/gamewin.jpg");
+        ending->getUi()->result->setPixmap(pixmap.scaled(ending->getUi()->result->size(), Qt::KeepAspectRatio));
+        gameWin->play();
     }
     else
     {
-        ending->getUi()->result->setText("黑方胜");
+        QPixmap pixmap(":/img/img/gamelose.jpg");
+        ending->getUi()->result->setPixmap(pixmap.scaled(ending->getUi()->result->size(), Qt::KeepAspectRatio));
+        gameWin->play();
     }
     ending->exec();
+}
+
+Ui::ChessBoard *ChessBoard::getUi()
+{
+    return ui;
+}
+
+void ChessBoard::regretChess()
+{
+    if(vector.empty())
+        return;
+    Step* step=vector.back();
+    vector.pop_back();
+    retreat(step);
+    user=!user;
+    update();
 }
 

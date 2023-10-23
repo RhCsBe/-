@@ -6,6 +6,7 @@ Ending::Ending(QWidget *parent) :
     ui(new Ui::Ending)
 {
     ui->setupUi(this);
+    setWindowFlag(Qt::WindowCloseButtonHint, false);
 }
 
 Ending::~Ending()

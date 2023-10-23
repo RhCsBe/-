@@ -1,8 +1,8 @@
 #include "singleplay.h"
 
-SinglePlay::SinglePlay()
+SinglePlay::SinglePlay(QWidget *parent)
 {
-
+    setFunctionStyle();
 }
 
 int SinglePlay::cmpScore()
@@ -97,7 +97,7 @@ Step* SinglePlay::getComputerMove()
         step=vector.front();
         vector.pop_front();
         advance(step);
-        score=cmpMinScore(level-1);
+        score=cmpMinScore(level-1,maxScore);
         retreat(step);
         if(score>maxScore)
         {
@@ -118,38 +118,15 @@ void SinglePlay::computerMove()
     Step* step=getComputerMove();
     moveChess->play();
     moveTo(step->moveId,chess[step->moveId].line+step->dx,chess[step->moveId].row+step->dy);
+    vector.push_back(step);
     if(judgment.judge_jiangjun(chess,user,pos))
     {
         jiangJun->play();
     }
+    if(judgment.judge_kill(chess[4],chess[27]))
+        setEnding();
     user=!user;
     update();
-}
-
-void SinglePlay::advance(Step *step)
-{
-    int x=chess[step->moveId].line;
-    int y=chess[step->moveId].row;
-    pos[y][x]=-1;
-    if(pos[y+step->dy][x+step->dx]!=-1)
-    {
-        chess[pos[y+step->dy][x+step->dx]].dead=true;
-    }
-    pos[y+step->dy][x+step->dx]=step->moveId;
-    chess[step->moveId].moveTo(x+step->dx,y+step->dy);
-}
-
-void SinglePlay::retreat(Step *step)
-{
-    int x=chess[step->moveId].line;
-    int y=chess[step->moveId].row;
-    if(step->killId!=-1)
-    {
-        chess[step->killId].dead=false;
-    }
-    pos[y][x]=step->killId;
-    pos[y-step->dy][x-step->dx]=step->moveId;
-    chess[step->moveId].moveTo(x-step->dx,y-step->dy);
 }
 
 void SinglePlay::cmpStepSum(QVector<Step *> &stepVector,bool user)
@@ -184,7 +161,7 @@ void SinglePlay::cmpStepSum(QVector<Step *> &stepVector,bool user)
     //qDebug("\\\\");
 }
 
-int SinglePlay::cmpMaxScore(int level)
+int SinglePlay::cmpMaxScore(int level,int minNum)
 {
     if(!level)
         return cmpScore();
@@ -197,16 +174,25 @@ int SinglePlay::cmpMaxScore(int level)
         Step* step=vector.front();
         vector.pop_front();
         advance(step);
-        score=cmpMinScore(level-1);
+        score=cmpMinScore(level-1,minNum);
         retreat(step);
+        delete step;
+        if(score>minNum)
+        {
+            for(auto item:vector)
+            {
+                delete item;
+            }
+            return score;
+        }
         if(score>maxScore)
             maxScore=score;
-        delete step;
+
     }
     return maxScore;
 }
 
-int SinglePlay::cmpMinScore(int level)
+int SinglePlay::cmpMinScore(int level,int maxNum)
 {
     if(!level)
         return cmpScore();
@@ -219,11 +205,19 @@ int SinglePlay::cmpMinScore(int level)
         Step* step=vector.front();
         vector.pop_front();
         advance(step);
-        score=cmpMaxScore(level-1);
+        score=cmpMaxScore(level-1,maxNum);
         retreat(step);
+        delete step;
+        if(score<maxNum)
+        {
+            for(auto item:vector)
+            {
+                delete item;
+            }
+            return score;
+        }
         if(score<minScore)
             minScore=score;
-        delete step;
     }
     return minScore;
 }
@@ -264,18 +258,64 @@ void SinglePlay::mousePressEvent(QMouseEvent *event)
         {
             if(judge(select,x,y))
             {
+                //要先存储玩家的走法，否则走棋后再存储的数据是错误的，或者可以先生成Step，直接存储Step，就无所谓先走后走
+                vector.push_back(new Step(select,x-chess[select].line,y-chess[select].row,pos[y][x]));
                 moveChess->play();
                 moveTo(select,x,y);
                 if(judgment.judge_jiangjun(chess,user,pos))
                 {
                     jiangJun->play();
                 }
+                if(judgment.judge_kill(chess[4],chess[27]))
+                    setEnding();
                 user=!user;
                 QTimer::singleShot(1000,this,SinglePlay::computerMove);
             }
             else
                 return;
         }
+    }
+    update();
+}
+
+void SinglePlay::setEnding()
+{
+    if(chess[4].dead)
+    {
+        QPixmap pixmap(":/img/img/gamewin.jpg");
+        ending->getUi()->result->setPixmap(pixmap.scaled(ending->getUi()->result->size(), Qt::KeepAspectRatio));
+        gameWin->play();
+    }
+    else
+    {
+        QPixmap pixmap(":/img/img/gamelose.jpg");
+        ending->getUi()->result->setPixmap(pixmap.scaled(ending->getUi()->result->size(), Qt::KeepAspectRatio));
+        gameLose->play();
+    }
+    ending->exec();
+}
+
+void SinglePlay::setFunctionStyle()
+{
+    disconnect(getUi()->regret,QPushButton::clicked,this,ChessBoard::regretChess);
+    getUi()->pattern->setStyleSheet("color:red");
+    getUi()->pattern->setText("人机对战");
+    getUi()->regret->setEnabled(true);
+    //为了避免突然中断导致程序崩溃或者底层数据错乱，所以使用队列连接方式
+    connect(getUi()->regret,QPushButton::clicked,this,SinglePlay::regretChess,Qt::QueuedConnection);
+}
+
+void SinglePlay::regretChess()
+{
+    if(vector.empty())
+        return;
+    Step* step=nullptr;
+    for(int i=0;i<2;i++)
+    {
+        step=vector.back();
+        vector.pop_back();
+        retreat(step);
+        user=!user;
     }
     update();
 }
