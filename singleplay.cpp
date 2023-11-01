@@ -3,6 +3,7 @@
 SinglePlay::SinglePlay(QWidget *parent)
 {
     setFunctionStyle();
+    connect(getUi()->level,QComboBox::currentIndexChanged,this,SinglePlay::setLevel);
 }
 
 int SinglePlay::cmpScore()
@@ -126,6 +127,7 @@ void SinglePlay::computerMove()
     if(judgment.judge_kill(chess[4],chess[27]))
         setEnding();
     user=!user;
+    userChange();
     update();
 }
 
@@ -269,6 +271,7 @@ void SinglePlay::mousePressEvent(QMouseEvent *event)
                 if(judgment.judge_kill(chess[4],chess[27]))
                     setEnding();
                 user=!user;
+                userChange();
                 QTimer::singleShot(1000,this,SinglePlay::computerMove);
             }
             else
@@ -300,9 +303,23 @@ void SinglePlay::setFunctionStyle()
     disconnect(getUi()->regret,QPushButton::clicked,this,ChessBoard::regretChess);
     getUi()->pattern->setStyleSheet("color:red");
     getUi()->pattern->setText("人机对战");
+    getUi()->user->setText("玩家");
     getUi()->regret->setEnabled(true);
+    getUi()->level->setEnabled(true);
     //为了避免突然中断导致程序崩溃或者底层数据错乱，所以使用队列连接方式
     connect(getUi()->regret,QPushButton::clicked,this,SinglePlay::regretChess,Qt::QueuedConnection);
+}
+
+void SinglePlay::userChange()
+{
+    if(user)
+    {
+        getUi()->user->setText("玩家");
+    }
+    else
+    {
+        getUi()->user->setText("人机");
+    }
 }
 
 void SinglePlay::regretChess()
@@ -318,5 +335,24 @@ void SinglePlay::regretChess()
         user=!user;
     }
     update();
+}
+
+void SinglePlay::setLevel()
+{
+    int num=getUi()->level->currentIndex();
+    switch(num)
+    {
+    case 0:
+        level=2;
+        break;
+    case 1:
+        level=3;
+        break;
+    case 2:
+        level=4;
+        break;
+    default:
+        break;
+    }
 }
 

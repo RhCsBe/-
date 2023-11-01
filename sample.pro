@@ -15,6 +15,7 @@ SOURCES += \
     judgment.cpp \
     main.cpp \
     chessboard.cpp \
+    setting.cpp \
     singleplay.cpp \
     step.cpp
 
@@ -24,13 +25,15 @@ HEADERS += \
     chessboard.h \
     ending.h \
     judgment.h \
+    setting.h \
     singleplay.h \
     step.h
 
 FORMS += \
     beginning.ui \
     chessboard.ui \
-    ending.ui
+    ending.ui \
+    setting.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

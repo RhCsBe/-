@@ -13,6 +13,7 @@
 #include "ui_ending.h"
 #include <QVector>
 #include "step.h"
+#include "setting.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ChessBoard; }
@@ -47,7 +48,12 @@ public:
     QAudioOutput* audio_jiangJun=nullptr;
     QAudioOutput* audio_gameWin=nullptr;
     QAudioOutput* audio_gameLose=nullptr;
+    QBrush* brush_red=new QBrush(Qt::yellow);//红方画刷
+    QBrush* brush_black=new QBrush(Qt::yellow);//黑方画刷
+    QPen* background_pen=new QPen(Qt::black,1);//棋盘画笔
+    //int id[3]={0};//setting对象修改的设置参数
     Ending* ending;//游戏结束界面
+    Setting* setting;//个性化设置界面
     void paintEvent(QPaintEvent *event);//绘图事件
     void paintBoard(QPainter& painter);//绘制棋盘
     void paintChess(QPainter& painter);//绘制棋子
@@ -62,8 +68,12 @@ public:
     void advance(Step* step);//前进一步
     void retreat(Step* step);//后退一步
     void setEnding();//游戏结束设置
+    void userChange();//使用者转换函数
+    void reFresh();//恢复棋盘，再来一把
+    //void setColor();//通过setting对象返回的值修改棋盘和棋子的颜色设置
     Ui::ChessBoard* getUi();//获取ui指针
 public slots:
+    //void setBegin();//游戏开始设置
     void regretChess();//悔棋
 private:
     Ui::ChessBoard *ui;

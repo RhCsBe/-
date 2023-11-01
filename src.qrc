@@ -11,5 +11,7 @@
     <qresource prefix="/img">
         <file>img/gamelose.jpg</file>
         <file>img/gamewin.jpg</file>
+        <file>img/blackwin.jpg</file>
+        <file>img/redwin.jpg</file>
     </qresource>
 </RCC>

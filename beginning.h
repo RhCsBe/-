@@ -14,6 +14,8 @@ class Beginning : public QDialog
 
 public:
     explicit Beginning(QWidget *parent = nullptr);
+    ChessBoard* chessBoard=nullptr;
+    SinglePlay* singlePlay=nullptr;
     ~Beginning();
 
 private:
