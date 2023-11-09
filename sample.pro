@@ -1,4 +1,4 @@
-QT       += core gui multimedia
+QT       += core gui multimedia network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,9 +12,11 @@ SOURCES += \
     beginning.cpp \
     chess.cpp \
     ending.cpp \
+    forbidchess.cpp \
     judgment.cpp \
     main.cpp \
     chessboard.cpp \
+    networkplay.cpp \
     setting.cpp \
     singleplay.cpp \
     step.cpp
@@ -24,7 +26,9 @@ HEADERS += \
     chess.h \
     chessboard.h \
     ending.h \
+    forbidchess.h \
     judgment.h \
+    networkplay.h \
     setting.h \
     singleplay.h \
     step.h
@@ -33,6 +37,7 @@ FORMS += \
     beginning.ui \
     chessboard.ui \
     ending.ui \
+    forbidchess.ui \
     setting.ui
 
 # Default rules for deployment.

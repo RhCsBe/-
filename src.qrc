@@ -13,5 +13,6 @@
         <file>img/gamewin.jpg</file>
         <file>img/blackwin.jpg</file>
         <file>img/redwin.jpg</file>
+        <file>img/AHU.png</file>
     </qresource>
 </RCC>

@@ -133,6 +133,7 @@ bool Judgment::judge_pao(const Chess &chess, int x, int y, int **pos)
 
 bool Judgment::judge_jiang(const Chess &chess, int x, int y, int **pos)
 {
+    qDebug()<<"jiang";
     //不能自己吃自己
     if(chess.line==x&&chess.row==y)
         return false;
@@ -141,6 +142,20 @@ bool Judgment::judge_jiang(const Chess &chess, int x, int y, int **pos)
         return false;
     if(chess.color)
     {
+        //判断是否能飞将
+        if(pos[y][x]==4)
+        {
+            for(int i=chess.row-1;i>=y;i--)
+            {
+                if(i==y)
+                    return true;
+                if(pos[i][x]!=-1)
+                {
+                    break;
+                }
+            }
+        }
+        //将不能走出九宫格
         if(x<3||x>5||y<7)
         {
             return false;
@@ -155,6 +170,20 @@ bool Judgment::judge_jiang(const Chess &chess, int x, int y, int **pos)
     }
     else
     {
+        //判断是否能飞将
+        if(pos[y][x]==27)
+        {
+            for(int i=chess.row+1;i<=y;i++)
+            {
+                if(i==y)
+                    return true;
+                if(pos[i][x]!=-1)
+                {
+                    break;
+                }
+            }
+        }
+        //将不能走出九宫格
         if(x<3||x>5||y>2)
         {
             return false;

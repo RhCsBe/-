@@ -13,15 +13,15 @@ ChessBoard::ChessBoard(QWidget *parent)
     ending=new Ending(this);
     //qDebug()<<id;
     setting=new Setting(brush_red,brush_black,background_pen,this);
+    forbidChess=new ForbidChess(chess,pos,this);
     //setting=new Setting(id,this);
     //这段代码有点问题，记得解决
     //点击再来一局按键后将user设置为0是因为槽函数响应完后主进程回到setEnding函数后继续执行，下一行代码user=!user会将0设置为1
-    connect(ending->getUi()->nextOne,QPushButton::clicked,this,[this](){this->setChess();this->setPos();user=0;select=-1;ending->close();});
-    connect(ending->getUi()->over,QPushButton::clicked,this,[this](){ending->close();this->close();});
-    //connect(ui->personalSetting,QPushButton::clicked,this,[this](){this->setting->exec();setColor();update();});
-    //使用队列连接方式，防止在人机模式时与主程序发生冲突
-    connect(ui->personalSetting,QPushButton::clicked,this,[this](){this->setting->exec();update();},Qt::QueuedConnection);
-    //connect(ui->beginning,QPushButton::clicked,this,ChessBoard::setBegin);
+    connect(ending->getUi()->nextOne,&QPushButton::clicked,this,[this](){this->setChess();this->setPos();user=0;select=-1;ending->close();});
+    connect(ending->getUi()->over,&QPushButton::clicked,this,[this](){ending->close();this->close();});
+    //绑定个性化设置界面，使用队列连接方式，防止在人机模式时与主程序发生冲突
+    connect(ui->personalSetting,&QPushButton::clicked,this,[this](){this->setting->exec();update();},Qt::QueuedConnection);
+    connect(ui->forbidChess,&QPushButton::clicked,this,[this](){this->forbidChess->checkChess(pos);this->forbidChess->exec();update();},Qt::QueuedConnection);
 }
 
 ChessBoard::~ChessBoard()
@@ -365,7 +365,7 @@ void ChessBoard::setPos()
 //        {
 //            qDebug()<<pos[i][j];
 //        }
-    //    }
+//    }
 }
 
 void ChessBoard::setFunctionStyle()
@@ -490,82 +490,15 @@ void ChessBoard::reFresh()
 {
     this->setChess();
     this->setPos();
+    forbidChess->resetForbidden();
     user=1;
     select=-1;
 }
-
-//void ChessBoard::setColor()
-//{
-//    //qDebug()<<id;
-//    qDebug()<<id[0];
-//    qDebug()<<id[1];
-//    qDebug()<<id[2];
-//    switch(id[0])
-//    {
-//    case 0:
-//        brush_red->setColor(Qt::yellow);
-//        break;
-//    case 1:
-//        brush_red->setColor(Qt::white);
-//        break;
-//    case 2:
-//        brush_red->setColor(Qt::green);
-//        break;
-//    case 3:
-//        brush_red->setColor(QColor(Qt::blue));
-//        break;
-//    default:
-//        break;
-//    }
-//    switch(id[1])
-//    {
-//    case 0:
-//        brush_black->setColor(Qt::yellow);
-//        break;
-//    case 1:
-//        brush_black->setColor(Qt::white);
-//        break;
-//    case 2:
-//        brush_black->setColor(Qt::green);
-//        break;
-//    case 3:
-//        brush_black->setColor(Qt::blue);
-//        break;
-//    default:
-//        break;
-//    }
-//    qDebug()<<"C";
-//    switch(id[2])
-//    {
-//    case 0:
-//        background_pen->setColor(Qt::black);
-//        break;
-//    case 1:
-//        background_pen->setColor(Qt::red);
-//        break;
-//    case 2:
-//        background_pen->setColor(QColor(255, 192, 203));
-//        break;
-//    case 3:
-//        background_pen->setColor(QColor(255, 165, 0));
-//        break;
-//    default:
-//        break;
-//    }
-//}
 
 Ui::ChessBoard *ChessBoard::getUi()
 {
     return ui;
 }
-
-//void ChessBoard::setBegin()
-//{
-//    begin=true;
-//    ui->beginning->setEnabled(false);
-//    ui->personalSetting->setEnabled(false);
-//    ui->level->setEnabled(false);
-//}
 
 void ChessBoard::regretChess()
 {
@@ -575,6 +508,7 @@ void ChessBoard::regretChess()
     vector.pop_back();
     retreat(step);
     user=!user;
+    userChange();
     update();
 }
 

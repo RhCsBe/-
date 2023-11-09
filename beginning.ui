@@ -59,6 +59,32 @@
      <string>双人对战</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="networkPlay">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>180</y>
+      <width>161</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>网络对战</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="AHU">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>-10</y>
+     <width>341</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
   </widget>
  </widget>
  <resources/>

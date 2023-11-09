@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "singleplay.h"
+#include "networkplay.h"
 
 namespace Ui {
 class Beginning;
@@ -16,6 +17,7 @@ public:
     explicit Beginning(QWidget *parent = nullptr);
     ChessBoard* chessBoard=nullptr;
     SinglePlay* singlePlay=nullptr;
+    NetworkPlay* networkPlay=nullptr;
     ~Beginning();
 
 private:

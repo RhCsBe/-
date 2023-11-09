@@ -179,17 +179,16 @@ int SinglePlay::cmpMaxScore(int level,int minNum)
         score=cmpMinScore(level-1,minNum);
         retreat(step);
         delete step;
-        if(score>minNum)
-        {
-            for(auto item:vector)
-            {
-                delete item;
-            }
-            return score;
-        }
+//        if(score>=minNum&&minNum!=100000)
+//        {
+//            for(auto item:vector)
+//            {
+//                delete item;
+//            }
+//            return score;
+//        }
         if(score>maxScore)
             maxScore=score;
-
     }
     return maxScore;
 }
@@ -210,14 +209,14 @@ int SinglePlay::cmpMinScore(int level,int maxNum)
         score=cmpMaxScore(level-1,maxNum);
         retreat(step);
         delete step;
-        if(score<maxNum)
-        {
-            for(auto item:vector)
-            {
-                delete item;
-            }
-            return score;
-        }
+//        if(score<=maxNum&&maxNum!=-100000)
+//        {
+//            for(auto item:vector)
+//            {
+//                delete item;
+//            }
+//            return score;
+//        }
         if(score<minScore)
             minScore=score;
     }
@@ -304,7 +303,7 @@ void SinglePlay::setFunctionStyle()
     getUi()->pattern->setStyleSheet("color:red");
     getUi()->pattern->setText("人机对战");
     getUi()->user->setText("玩家");
-    getUi()->regret->setEnabled(true);
+    //getUi()->regret->setEnabled(true);
     getUi()->level->setEnabled(true);
     //为了避免突然中断导致程序崩溃或者底层数据错乱，所以使用队列连接方式
     connect(getUi()->regret,QPushButton::clicked,this,SinglePlay::regretChess,Qt::QueuedConnection);
@@ -333,6 +332,7 @@ void SinglePlay::regretChess()
         vector.pop_back();
         retreat(step);
         user=!user;
+        userChange();
     }
     update();
 }
