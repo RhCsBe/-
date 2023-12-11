@@ -124,8 +124,16 @@ void SinglePlay::computerMove()
     {
         jiangJun->play();
     }
+    //之前只修改了玩家操作结束后判定的user设置取消取反，直接设置为1，忘了设置人机操作后的判定，这里补上
     if(judgment.judge_kill(chess[4],chess[27]))
+    {
+        timer->stop();
         setEnding();
+        userChange();
+        //qDebug()<<"user="<<user;
+        update();
+        return;
+    }
     user=!user;
     userChange();
     update();
@@ -268,7 +276,14 @@ void SinglePlay::mousePressEvent(QMouseEvent *event)
                     jiangJun->play();
                 }
                 if(judgment.judge_kill(chess[4],chess[27]))
+                {
+                    timer->stop();
                     setEnding();
+                    userChange();
+                    //qDebug()<<"user="<<user;
+                    update();
+                    return;
+                }
                 user=!user;
                 userChange();
                 QTimer::singleShot(1000,this,SinglePlay::computerMove);

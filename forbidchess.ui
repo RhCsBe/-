@@ -11,12 +11,18 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>禁用棋子</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog{
+background-image:url(&quot;:/img/img/禁用棋子背景.png&quot;);
+background-size:cover;
+}</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>200</x>
      <y>10</y>
      <width>141</width>
      <height>61</height>

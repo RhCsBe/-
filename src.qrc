@@ -14,5 +14,9 @@
         <file>img/blackwin.jpg</file>
         <file>img/redwin.jpg</file>
         <file>img/AHU.png</file>
+        <file>img/棋盘背景.jpg</file>
+        <file>img/个性化设置背景.png</file>
+        <file>img/制作人员背景.png</file>
+        <file>img/禁用棋子背景.png</file>
     </qresource>
 </RCC>

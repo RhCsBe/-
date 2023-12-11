@@ -6,7 +6,10 @@ Ending::Ending(QWidget *parent) :
     ui(new Ui::Ending)
 {
     ui->setupUi(this);
+    //隐藏删除键
     setWindowFlag(Qt::WindowCloseButtonHint, false);
+    //设置固定宽高
+    this->setFixedSize(this->width(),this->height());
 }
 
 Ending::~Ending()

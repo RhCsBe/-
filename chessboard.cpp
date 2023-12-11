@@ -10,6 +10,7 @@ ChessBoard::ChessBoard(QWidget *parent)
     setPos();
     setAudio();
     setFunctionStyle();
+    timer=new QTimer(this);
     ending=new Ending(this);
     //qDebug()<<id;
     setting=new Setting(brush_red,brush_black,background_pen,this);
@@ -17,11 +18,17 @@ ChessBoard::ChessBoard(QWidget *parent)
     //setting=new Setting(id,this);
     //这段代码有点问题，记得解决
     //点击再来一局按键后将user设置为0是因为槽函数响应完后主进程回到setEnding函数后继续执行，下一行代码user=!user会将0设置为1
-    connect(ending->getUi()->nextOne,&QPushButton::clicked,this,[this](){this->setChess();this->setPos();user=0;select=-1;ending->close();});
+    //修改后在返回主进程后直接return退出鼠标点击事件，不会执行user的取反操作，可以在这直接把user设置为1
+    //不能在这执行userChange函数，因为人机模式和双人模式的userChange不一样，在这里调用会导致人机模式和双人模式的userChange是一样的
+    connect(ending->getUi()->nextOne,&QPushButton::clicked,this,[this](){//this->setChess();this->setPos();user=1;select=-1;
+        this->reFresh();ending->close();});
     connect(ending->getUi()->over,&QPushButton::clicked,this,[this](){ending->close();this->close();});
     //绑定个性化设置界面，使用队列连接方式，防止在人机模式时与主程序发生冲突
     connect(ui->personalSetting,&QPushButton::clicked,this,[this](){this->setting->exec();update();},Qt::QueuedConnection);
     connect(ui->forbidChess,&QPushButton::clicked,this,[this](){this->forbidChess->checkChess(pos);this->forbidChess->exec();update();},Qt::QueuedConnection);
+    connect(timer,&QTimer::timeout,this,&ChessBoard::addTime);
+    //设置固定宽高
+    this->setFixedSize(this->width(),this->height());
 }
 
 ChessBoard::~ChessBoard()
@@ -33,6 +40,7 @@ void ChessBoard::paintEvent(QPaintEvent *event)
 {
     QPainter painter;
     painter.begin(this);
+    //开启抗锯齿，不然线条很难看
     painter.setRenderHint(QPainter::Antialiasing);
     paintBoard(painter);
     paintChess(painter);
@@ -44,6 +52,8 @@ void ChessBoard::paintBoard(QPainter &painter)
     //QPen pen(Qt::black,1);
     painter.setPen(*background_pen);
     //painter.setRenderHint(QPainter::Antialiasing, false);
+    //绘制背景图
+    painter.drawPixmap(QRect(0,0,this->width(),this->height()),QPixmap(":/img/img/棋盘背景.jpg"));
     for(int i=0;i<10;i++)
     {
         painter.drawLine(2*radius,2*radius+2*i*radius,18*radius,2*radius+2*i*radius);
@@ -67,6 +77,16 @@ void ChessBoard::paintBoard(QPainter &painter)
     painter.drawText(2*radius+4*radius,2*radius+8*radius,2*radius,2*radius,Qt::AlignCenter,"河");
     painter.drawText(2*radius+10*radius,2*radius+8*radius,2*radius,2*radius,Qt::AlignCenter,"汉");
     painter.drawText(2*radius+12*radius,2*radius+8*radius,2*radius,2*radius,Qt::AlignCenter,"界");
+    //绘制特殊位置的拐角
+    paintCorner(painter,1,2);
+    paintCorner(painter,7,2);
+    paintCorner(painter,1,7);
+    paintCorner(painter,7,7);
+    for(int i=0;i<9;i+=2)
+    {
+        paintCorner(painter,i,3);
+        paintCorner(painter,i,6);
+    }
 }
 
 void ChessBoard::paintChess(QPainter &painter)
@@ -132,6 +152,24 @@ void ChessBoard::paintChess(QPainter &painter)
     }
 }
 
+void ChessBoard::paintCorner(QPainter &painter, int posX, int posY)
+{
+    if(posX>=0&&posX<8)
+    {
+        painter.drawLine(2*(posX+1)*radius+5,2*(posY+1)*radius-5,2*(posX+1)*radius+10,2*(posY+1)*radius-5);
+        painter.drawLine(2*(posX+1)*radius+5,2*(posY+1)*radius-5,2*(posX+1)*radius+5,2*(posY+1)*radius-10);
+        painter.drawLine(2*(posX+1)*radius+5,2*(posY+1)*radius+5,2*(posX+1)*radius+10,2*(posY+1)*radius+5);
+        painter.drawLine(2*(posX+1)*radius+5,2*(posY+1)*radius+5,2*(posX+1)*radius+5,2*(posY+1)*radius+10);
+    }
+    if(posX<9&&posX>0)
+    {
+        painter.drawLine(2*(posX+1)*radius-5,2*(posY+1)*radius-5,2*(posX+1)*radius-10,2*(posY+1)*radius-5);
+        painter.drawLine(2*(posX+1)*radius-5,2*(posY+1)*radius-5,2*(posX+1)*radius-5,2*(posY+1)*radius-10);
+        painter.drawLine(2*(posX+1)*radius-5,2*(posY+1)*radius+5,2*(posX+1)*radius-10,2*(posY+1)*radius+5);
+        painter.drawLine(2*(posX+1)*radius-5,2*(posY+1)*radius+5,2*(posX+1)*radius-5,2*(posY+1)*radius+10);
+    }
+}
+
 void ChessBoard::mousePressEvent(QMouseEvent *event)
 {
     int x=event->pos().rx();
@@ -175,7 +213,13 @@ void ChessBoard::mousePressEvent(QMouseEvent *event)
                     jiangJun->play();
                 }
                 if(judgment.judge_kill(chess[4],chess[27]))
+                {
+                    timer->stop();
                     setEnding();
+                    userChange();
+                    update();
+                    return;
+                }
                 user=!user;
                 userChange();
             }
@@ -373,10 +417,14 @@ void ChessBoard::setFunctionStyle()
     ui->pattern->setStyleSheet("color:red;");
     ui->pattern->setText("双人对战");
     ui->user->setStyleSheet("color:red;");
+    ui->userLabel->setStyleSheet("color:#7FFFD4");
     //ui->regret->setEnabled(false);
     connect(ui->regret,QPushButton::clicked,this,ChessBoard::regretChess);
-    //ui->level->setStyleSheet("QComboBox{text-align:center;}");
+    //ui->level->setStyleSheet("text-align:center;");
     ui->level->setEnabled(false);
+    ui->timer->setDigitCount(8);
+    ui->timer->setStyleSheet("border:none;color:#802A2A;");
+    //因为结算界面选择再来一把后，不会调用setFunctionStyle函数，所以timer显示器经过一秒后才归零，会有延迟，因此将timer显示器归零转移到了reFresh函数中
 }
 
 void ChessBoard::cmpPos(int &posX, int &posY)
@@ -490,14 +538,47 @@ void ChessBoard::reFresh()
 {
     this->setChess();
     this->setPos();
+    vector.clear();
     forbidChess->resetForbidden();
     user=1;
     select=-1;
+    //记录开始时间
+    beginTime=QDateTime::currentMSecsSinceEpoch();
+    //因为结算界面选择再来一把后，不会调用setStyle函数，所以timer显示器经过一秒后才归零，会有延迟，所以在这里将timer显示器归零
+    ui->timer->display("00:00:00");
+    timer->start(1000);
 }
 
 Ui::ChessBoard *ChessBoard::getUi()
 {
     return ui;
+}
+
+void ChessBoard::addTime()
+{
+//    second++;
+//    if(second==60)
+//    {
+//        second=0;
+//        minute++;
+//        if(minute==60)
+//        {
+//            minute=0;
+//            hour++;
+//        }
+//    }
+//    QString str1=QString::number(hour);
+//    QString str2=QString::number(minute);
+//    QString str3=QString::number(second);
+//    ui->timer->display(str1+":"+str2+":"+str3);
+//    auto nowtime=QTime::currentTime().second();
+//    qDebug()<<nowtime;
+    qint64 nowTime=QDateTime::currentMSecsSinceEpoch();
+    //qDebug()<<nowtime;
+    QTime time=QTime::fromMSecsSinceStartOfDay(nowTime-beginTime);
+    QString str=time.toString("HH:mm:ss");
+    ui->timer->display(str);
+    //qDebug()<<str;
 }
 
 void ChessBoard::regretChess()

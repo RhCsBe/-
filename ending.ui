@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>游戏结束</string>
   </property>
   <widget class="QPushButton" name="nextOne">
    <property name="geometry">

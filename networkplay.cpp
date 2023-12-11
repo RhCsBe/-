@@ -248,7 +248,11 @@ void NetworkPlay::mousePressEvent(QMouseEvent *event)
                     jiangJun->play();
                 }
                 if(judgment.judge_kill(chess[4],chess[27]))
+                {
+                    //ChessBoard中的timer是指针，NetWorkPlay中的timer是对象
+                    ChessBoard::timer->stop();
                     setEnding();
+                }
                 user=!user;
                 userChange();//更换user
                 sendStep();//发送自己的走法给对方
@@ -379,11 +383,19 @@ void NetworkPlay::beginGame()
             jiangJun->play();
         }
         if(judgment.judge_kill(chess[4],chess[27]))
+        {
+            //ChessBoard中的timer是指针，NetWorkPlay中的timer是对象
+            ChessBoard::timer->stop();
             setEnding();
+        }
         user=!user;
         userChange();
         update();
     });
+    //记录开始时间
+    beginTime=QDateTime::currentMSecsSinceEpoch();
+    //ChessBoard中的timer是指针，NetWorkPlay中的timer是对象
+    ChessBoard::timer->start(1000);
 }
 
 void NetworkPlay::reFresh()
@@ -400,6 +412,8 @@ void NetworkPlay::reFresh()
     getUi()->user->setText("匹配中");
     //获取对方IP
     this->setOtherAddress();
+    //因为结算界面选择再来一把后，不会调用setStyle函数，所以timer显示器经过一秒后才归零，会有延迟，所以在这里将timer显示器归零
+    getUi()->timer->display("00:00:00");
 }
 
 void NetworkPlay::clear()

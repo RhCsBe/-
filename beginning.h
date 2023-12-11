@@ -4,6 +4,8 @@
 #include <QDialog>
 #include "singleplay.h"
 #include "networkplay.h"
+#include "rule.h"
+#include "worker.h"
 
 namespace Ui {
 class Beginning;
@@ -18,6 +20,8 @@ public:
     ChessBoard* chessBoard=nullptr;
     SinglePlay* singlePlay=nullptr;
     NetworkPlay* networkPlay=nullptr;
+    Rule* rule=nullptr;
+    Worker* worker=nullptr;
     ~Beginning();
 
 private:

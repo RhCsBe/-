@@ -8,6 +8,8 @@ ForbidChess::ForbidChess(Chess* chess,int** pos,QWidget *parent) :
     ui->setupUi(this);
     this->chess=chess;
     this->pos=pos;
+    ui->label->setStyleSheet("color:#FF6100");
+    ui->blackGroup->setStyleSheet("color:gold");
     ui->redGroup->setStyleSheet("color:red;");
     //初始化按键组指针
     chessGroup=new QButtonGroup(this);
@@ -17,6 +19,8 @@ ForbidChess::ForbidChess(Chess* chess,int** pos,QWidget *parent) :
     //setBlackChess();
     setChessGroup();
     connect(ui->ok,QPushButton::clicked,this,[this](){this->setForbidden();this->forbid();this->close();});
+    //设置固定宽高
+    this->setFixedSize(this->width(),this->height());
 }
 
 void ForbidChess::resetForbidden()

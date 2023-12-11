@@ -133,7 +133,6 @@ bool Judgment::judge_pao(const Chess &chess, int x, int y, int **pos)
 
 bool Judgment::judge_jiang(const Chess &chess, int x, int y, int **pos)
 {
-    qDebug()<<"jiang";
     //不能自己吃自己
     if(chess.line==x&&chess.row==y)
         return false;
@@ -147,7 +146,7 @@ bool Judgment::judge_jiang(const Chess &chess, int x, int y, int **pos)
         {
             for(int i=chess.row-1;i>=y;i--)
             {
-                if(i==y)
+                if(i==y&&chess.line==x)
                     return true;
                 if(pos[i][x]!=-1)
                 {
@@ -175,7 +174,7 @@ bool Judgment::judge_jiang(const Chess &chess, int x, int y, int **pos)
         {
             for(int i=chess.row+1;i<=y;i++)
             {
-                if(i==y)
+                if(i==y&&chess.line==x)
                     return true;
                 if(pos[i][x]!=-1)
                 {

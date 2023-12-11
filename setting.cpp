@@ -73,10 +73,10 @@ Setting::Setting(QBrush* brush_red,QBrush* brush_black,QPen* background_pen,QWid
             this->brush_red->setColor(QColor(Qt::white));
             break;
         case 2:
-            this->brush_red->setColor(QColor(Qt::green));
+            this->brush_red->setColor(QColor(0x7FFFD4));
             break;
         case 3:
-            this->brush_red->setColor(QColor(Qt::blue));
+            this->brush_red->setColor(QColor(0x87CEEB));
             break;
         default:
             break;
@@ -90,10 +90,10 @@ Setting::Setting(QBrush* brush_red,QBrush* brush_black,QPen* background_pen,QWid
             this->brush_black->setColor(Qt::white);
             break;
         case 2:
-            this->brush_black->setColor(Qt::green);
+            this->brush_black->setColor(QColor(0x7FFFD4));
             break;
         case 3:
-            this->brush_black->setColor(Qt::blue);
+            this->brush_black->setColor(QColor(0x87CEEB));
             break;
         default:
             break;
@@ -107,7 +107,7 @@ Setting::Setting(QBrush* brush_red,QBrush* brush_black,QPen* background_pen,QWid
             this->background_pen->setColor(Qt::red);
             break;
         case 2:
-            this->background_pen->setColor(QColor(255, 192, 203));
+            this->background_pen->setColor(QColor(0xFF1493));
             break;
         case 3:
             this->background_pen->setColor(QColor(255, 165, 0));
@@ -117,6 +117,8 @@ Setting::Setting(QBrush* brush_red,QBrush* brush_black,QPen* background_pen,QWid
         }
         this->close();
     });
+    //设置固定宽高
+    this->setFixedSize(this->width(),this->height());
 }
 
 //Setting::Setting(int *id, QWidget *parent):

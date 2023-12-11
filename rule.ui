@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Rule</class>
+ <widget class="QDialog" name="Rule">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>606</width>
+    <height>599</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>游戏规则</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>20</y>
+     <width>171</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>游戏规则</string>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="textBrowser">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>110</y>
+     <width>511</width>
+     <height>391</height>
+    </rect>
+   </property>
+   <property name="html">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:14pt; font-weight:700;&quot;&gt;中国象棋玩法与规则&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;    中国象棋是由两人轮流走子，在战法上遵循古代孙子兵法中的“不战而屈人之兵，善之善者也”的作战思想，以“将死”或“困毙”对方将（帅）为胜的一种二人对抗性游戏。对局时，由执红棋的一方先走，双方轮流各走一招，直至分出胜、负、和，对局即终了。在棋战中，人们可以从攻与防、虚与实、整体与局部等复杂关系的变化中提升思维能力。&lt;br /&gt;一、行棋规定&lt;br /&gt;1、对局开始前，双方棋子在棋盘上的摆法见右图。&lt;br /&gt;2、对局时，由执红棋的一方先走，双方轮流走一步。&lt;br /&gt;3、轮到走棋的一方，将某个棋子从一个交叉点走到另一个交叉点，或者吃掉对方的棋子而占领其交叉点，都算走了一着。&lt;br /&gt;4、双方各走一着，称为一个回合。&lt;br /&gt;5、走一着棋时，如果己方棋子能够走到的位置有对方棋子存在，就可以把对方棋子吃掉而占领那个位置。&lt;br /&gt;  一方的棋子攻击对方的帅（将），并在下一着要把它吃掉，称为“照将”，或简称“将”。“照将”不必声明。被“照将”的一方必须立即“应将”，即用自己的着法去化解被“将”的状态。如果被“照将”而无法“应将”，就算被“将死”。&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;二、棋子玩法&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;1、将或帅：&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动范围：它只能在王宫内移动。&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动规则：它每一步只可以水平或垂直移动一点。&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;2、士：&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动范围：它只能在王宫内移动。&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动规则：它每一步只可以沿对角线方向移动一点。&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;3、象或相：&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动范围：河界的一侧。&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动规则：它每一步只可以沿对角线方向移动两点，另外，在移动的过程中不能够穿越障碍。&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;4、马：&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动范围：任何位置&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动规则：每一步只可以水平或垂直移动一点，再按对角线方面向左或者右移动。另外，在移动的过程中不能够穿越障碍。&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;5、车：&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动范围：任何位置&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动规则：可以水平或垂直方向移动任意个无阻碍的点。&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;6、炮：&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动范围：任何位置&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动规则：移动起来和车很相似，但它必须跳过一个棋子来吃掉对方的一个棋子。&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;7、兵或卒：&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动范围：任何位置&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'宋体'; font-size:12pt;&quot;&gt;移动规则：每步只能向前移动一点。过河以后，它便增加了向左右移动的能力，兵不允许向后移动。&lt;br /&gt;三、棋例总纲&lt;br /&gt;1、棋例释义&lt;br /&gt;（1）对局中有时出现双方着法循环不变的重复局面。据以裁处这种局面的规则条例，称为《棋例》。&lt;br /&gt;（2）长将、长杀、长捉、一将一杀、一将一捉、一杀一捉等循环重复的攻击手段，统称为“禁止着法”。&lt;br /&gt;（3）闲着（含：兑、献、拦、跟）、数将一闲、数杀一闲、数捉一闲等着法，无论是否重复，统称为“允许着法”。&lt;br /&gt;（4）车、马、炮、过河兵（卒）、士、相（象），均算“子力”。帅（将）、未过河兵（卒），不算“子力”。“子力”简称“子”。&lt;br /&gt;（5）子力价值是衡量子力得失的尺度，也是判断是否“捉子”的依据之一。原则上，一车相当于双马、双炮或一马一炮；马炮相等；士相（象）相等；过河兵（卒）价值浮动，一兵换取数子或一子换取数兵均不算得子。&lt;br /&gt;2、棋例总则&lt;br /&gt;（1）在任何情况下，均不允许单方面长将。&lt;br /&gt;（2）双方均为允许着法，双方不变作和。&lt;br /&gt;（3）双方均为禁止着法（不包括一方为长将），双方不变作和。&lt;br /&gt;（4）一方为禁止着法，另一方为允许着法，应由前者变着，不变判负。&lt;br /&gt;3、棋例通则&lt;br /&gt;（1）允许帅（将）本身步步叫吃对方的棋子，按闲着处理。&lt;br /&gt;（2）其他棋子和帅（将）同时捉吃或借帅（将）之力捉吃对方的棋子，均按捉处理。&lt;br /&gt;（3）兵（卒）本身捉吃对方的棋子（不含将杀），按闲处理；如形成相互长打局面，则应按捉处理。&lt;br /&gt;（4）占据防守要点，立即构成简明和棋，附带产生的捉士相（象），按闲处理。&lt;br /&gt;（5）凡走子兼具多种作用时，应从重称呼和裁处。如杀兼捉，按杀；捉兼况，按捉等，依此类推。&lt;br /&gt;4、棋例细则&lt;br /&gt;（1）在任何情况下，均不许可单方面长将。&lt;br /&gt;（2）凡是走子前不存在捉，而走子后造成捉的（即从没捉到捉），一律按捉处理。&lt;br /&gt;（3）凡走子吵洞后，预计下一着能在子力价值上构成得子者，均按捉处理。&lt;br /&gt;（4）凡用作为根的子捉吃对方的子，也按捉处理。&lt;br /&gt;（5）凡捉子兼具兑献。送吃，也按捉处理。&lt;br /&gt;（6）凡是原来已经升兆枯捉着子的子或相关子，走动后无新的捉子行为（即从捉到捉）均捉闲着处理。&lt;br /&gt;（7）凡形式上捉子，一旦吃子立即会被对方将死者,均闲着处理。&lt;br /&gt;（8）双方均为禁止着法（不包括单方面长将），双方不变作和。&lt;br /&gt;（9）其他棋子和帅（将）同时捉吃对方的棋子，均按捉处理。&lt;br /&gt;（10）过河兵（卒）子力价值浮动。&lt;br /&gt;（11）发生互打时，兵（卒）叫吃子均按捉处理。&lt;br /&gt;（12）凡走子兼具多种作用，从重定性。&lt;br /&gt;（13）占据防守要点，立即形成简明和棋,附带产生的捉士、相（象），按闲处理。&lt;br /&gt;5、胜负规则&lt;br /&gt;对局中猜陵，出现下列情况之一，本方算输，对方赢：&lt;br /&gt;（1）己方的帅（将）被对方棋子将死或吃掉；&lt;br /&gt;（2）己方无子可走（被困毙）；&lt;br /&gt;（3）己方对对方“长将”或“长捉”；&lt;br /&gt;（4）己方发出认输请求；&lt;br /&gt;（5）有步时要求的，己方走棋超出步时限制；&lt;br /&gt;（6）有时间要求的，超过规定时间；&lt;br /&gt;（7）违反比赛规则。&lt;br /&gt;6、和棋&lt;br /&gt;出现下列情况之一，为和棋：&lt;br /&gt;（1）双方均无可能取胜的简单局势；&lt;br /&gt;（2）一方提议作和，另一方表示同意；&lt;br /&gt;（3）双方走棋出现循环反复三次，符合《棋例》中“不变作和”的有关规定；&lt;br /&gt;（4）符合自然限着的回合规定，即在连续60个回合中（也可根据比赛等级酌减），双方都没有吃过一个棋子。&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:10.5pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="returnBeginning">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>520</y>
+     <width>161</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>返回</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

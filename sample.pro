@@ -17,9 +17,11 @@ SOURCES += \
     main.cpp \
     chessboard.cpp \
     networkplay.cpp \
+    rule.cpp \
     setting.cpp \
     singleplay.cpp \
-    step.cpp
+    step.cpp \
+    worker.cpp
 
 HEADERS += \
     beginning.h \
@@ -29,16 +31,20 @@ HEADERS += \
     forbidchess.h \
     judgment.h \
     networkplay.h \
+    rule.h \
     setting.h \
     singleplay.h \
-    step.h
+    step.h \
+    worker.h
 
 FORMS += \
     beginning.ui \
     chessboard.ui \
     ending.ui \
     forbidchess.ui \
-    setting.ui
+    rule.ui \
+    setting.ui \
+    worker.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

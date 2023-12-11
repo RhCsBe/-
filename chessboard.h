@@ -15,6 +15,9 @@
 #include "step.h"
 #include "setting.h"
 #include "forbidchess.h"
+#include <QTimer>
+#include <QTime>
+#include <QDateTime>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ChessBoard; }
@@ -35,6 +38,11 @@ public:
     int** pos=nullptr;//底层棋盘数据指针
     int select=-1;//选中的棋子编号
     bool user=true;//当前走棋者
+    int hour=0;//小时数
+    int minute=0;//分钟数
+    int second=0;//秒数
+    qint64 beginTime=0;
+    QTimer* timer=nullptr;//计时定时器指针
     QVector<Step*> vector;//存储走棋步数
     Judgment judgment;//判定器对象
     QMediaPlayer* moveChess=nullptr;//移动棋子音频
@@ -59,6 +67,7 @@ public:
     void paintEvent(QPaintEvent *event);//绘图事件
     void paintBoard(QPainter& painter);//绘制棋盘
     void paintChess(QPainter& painter);//绘制棋子
+    void paintCorner(QPainter& painter,int posX,int posY);//绘制拐角
     void mousePressEvent(QMouseEvent *event);//鼠标按压事件
     void setAudio();//设置音频
     void setChess();//设置棋子
@@ -74,6 +83,7 @@ public:
     void reFresh();//恢复棋盘，再来一把
     Ui::ChessBoard* getUi();//获取ui指针
 public slots:
+    void addTime();//计时功能
     void regretChess();//悔棋
 private:
     Ui::ChessBoard *ui;

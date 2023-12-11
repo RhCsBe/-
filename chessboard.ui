@@ -11,7 +11,14 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>ChessBoard</string>
+   <string>中国象棋</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton{background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, stop:0.494318 rgba(214, 214, 214, 255), stop:0.5 rgba(236, 236, 236, 255));border: 1px solid rgb(124, 124, 124);border-radius:2px;} QPushButton:pressed{background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, stop:0.494318 rgba(134, 198, 233, 255), stop:0.5 rgba(206, 234, 248, 255));border-radius:2px;border: 1px solid #5F92B2;} QPushButton:hover{background-color: qconicalgradient(cx:0.5, cy:0.522909, angle:179.9, stop:0.494318 rgba(181, 225, 250, 255), stop:0.5 rgba(222, 242, 251, 255));border-radius:2px;border: 1px solid #3C80B1;}
+QPushButton{
+border-radius:5px;
+}
+</string>
   </property>
   <widget class="Line" name="line">
    <property name="geometry">
@@ -30,7 +37,7 @@
    <property name="geometry">
     <rect>
      <x>600</x>
-     <y>250</y>
+     <y>280</y>
      <width>161</width>
      <height>61</height>
     </rect>
@@ -66,7 +73,7 @@
    <property name="geometry">
     <rect>
      <x>600</x>
-     <y>340</y>
+     <y>360</y>
      <width>161</width>
      <height>61</height>
     </rect>
@@ -84,7 +91,7 @@
    <property name="geometry">
     <rect>
      <x>600</x>
-     <y>160</y>
+     <y>190</y>
      <width>161</width>
      <height>61</height>
     </rect>
@@ -113,7 +120,7 @@
     </property>
    </item>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="userLabel">
    <property name="geometry">
     <rect>
      <x>600</x>
@@ -171,7 +178,7 @@
    <property name="geometry">
     <rect>
      <x>600</x>
-     <y>430</y>
+     <y>440</y>
      <width>161</width>
      <height>61</height>
     </rect>
@@ -183,6 +190,19 @@
    </property>
    <property name="text">
     <string>禁用棋子</string>
+   </property>
+  </widget>
+  <widget class="QLCDNumber" name="timer">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>130</y>
+     <width>221</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="segmentStyle">
+    <enum>QLCDNumber::Filled</enum>
    </property>
   </widget>
  </widget>
