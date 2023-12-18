@@ -92,7 +92,7 @@ void ForbidChess::checkChess(int** pos)
             chessGroup->button(i)->setEnabled(true);
         }
     }
-    for(int i=4;i<27;i++)
+    for(int i=4;i<26;i++)
     {
         if(forbidden[i]!=chess[i+1].dead)
         {
@@ -103,7 +103,7 @@ void ForbidChess::checkChess(int** pos)
             chessGroup->button(i)->setEnabled(true);
         }
     }
-    for(int i=27;i<30;i++)
+    for(int i=26;i<30;i++)
     {
         if(forbidden[i]!=chess[i+2].dead)
         {
@@ -140,7 +140,7 @@ void ForbidChess::forbid()
             pos[chess[i].row][chess[i].line]=i;
         }
     }
-    for(int i=4;i<27;i++)
+    for(int i=4;i<26;i++)
     {
         if(forbidden[i])
         {
@@ -155,7 +155,7 @@ void ForbidChess::forbid()
             pos[chess[i+1].row][chess[i+1].line]=i+1;
         }
     }
-    for(int i=27;i<30;i++)
+    for(int i=26;i<30;i++)
     {
         if(forbidden[i])
         {

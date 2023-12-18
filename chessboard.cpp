@@ -120,31 +120,47 @@ void ChessBoard::paintChess(QPainter &painter)
         {
         case jv:
             painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
-                2*radius,2*radius,Qt::AlignCenter,"车");
+                2*radius,2*radius,Qt::AlignCenter,"車");
             break;
         case ma:
             painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
-                2*radius,2*radius,Qt::AlignCenter,"马");
+                2*radius,2*radius,Qt::AlignCenter,"馬");
             break;
         case xiang:
-            painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
-                2*radius,2*radius,Qt::AlignCenter,"相");
+            if(chess[i].color)
+                painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
+                    2*radius,2*radius,Qt::AlignCenter,"相");
+            else
+                painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
+                                 2*radius,2*radius,Qt::AlignCenter,"象");
             break;
         case shi:
-            painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
-                2*radius,2*radius,Qt::AlignCenter,"士");
+            if(chess[i].color)
+                painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
+                    2*radius,2*radius,Qt::AlignCenter,"仕");
+            else
+                painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
+                    2*radius,2*radius,Qt::AlignCenter,"士");
             break;
         case jiang:
-            painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
-                2*radius,2*radius,Qt::AlignCenter,"将");
+            if(chess[i].color)
+                painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
+                    2*radius,2*radius,Qt::AlignCenter,"帥");
+            else
+                painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
+                    2*radius,2*radius,Qt::AlignCenter,"將");
             break;
         case pao:
             painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
                 2*radius,2*radius,Qt::AlignCenter,"炮");
             break;
         case bing:
-            painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
-                2*radius,2*radius,Qt::AlignCenter,"兵");
+            if(chess[i].color)
+                painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
+                    2*radius,2*radius,Qt::AlignCenter,"兵");
+            else
+                painter.drawText(chess[i].line*2*radius+2*radius-radius,chess[i].row*2*radius+2*radius-radius,
+                    2*radius,2*radius,Qt::AlignCenter,"卒");
             break;
         default:
             break;

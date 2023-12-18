@@ -70,7 +70,7 @@ background-size:cover;
     </font>
    </property>
    <property name="text">
-    <string>软件策划：</string>
+    <string>需求建模：</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -88,7 +88,7 @@ background-size:cover;
     </font>
    </property>
    <property name="text">
-    <string>需求分析：</string>
+    <string>程序维护：</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
